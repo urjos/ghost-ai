@@ -4,15 +4,21 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Not started.
+- Phase 1: Foundation & Design System
 
 ## Current Goal
 
-- Define the immediate implementation goal here.
+- Feature 01 completed. Ready for the next feature unit.
 
 ## Completed
 
-- None.
+- Clean Next.js boilerplate.
+- Feature 01: Design System and UI Primitives (`context/feature-specs/01-design-system.md`)
+  - Configured `shadcn/ui` and installed `lucide-react`, `clsx`, `tailwind-merge`, and `@base-ui/react`.
+  - Added UI primitive components: `Button`, `Card`, `Dialog`, `Input`, `Tabs`, `Textarea`, `ScrollArea` under `components/ui/`.
+  - Implemented reusable `cn()` helper in `lib/utils.ts`.
+  - Configured dark-only workspace tokens in `app/globals.css` per `context/ui-context.md`.
+  - Verified no type errors and zero light mode fallback.
 
 ## In Progress
 
@@ -20,7 +26,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-- Add the next planned feature unit here.
+- Feature 02 (Next spec in sequence)
 
 ## Open Questions
 
