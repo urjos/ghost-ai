@@ -28,7 +28,8 @@ Update this file whenever the current phase, active feature, or implementation s
   - Installed `@clerk/ui` dependency and wired Clerk `dark` theme from `@clerk/ui/themes` with full token overrides using app CSS custom variables (`--accent-primary`, `--bg-surface`, `--bg-elevated`, etc.) with zero hardcoded colors.
   - Wrapped root layout `app/layout.tsx` with `ClerkProvider`.
   - Implemented Next.js 16 `proxy.ts` at project root with `clerkMiddleware` protecting all routes by default except public routes configured via existing Clerk sign-in and sign-up env vars (`/sign-in(.*)` and `/sign-up(.*)`).
-  - Built responsive, minimal, professional two-panel auth layout in `components/auth/auth-layout.tsx` (left: compact logo, tagline, text-only feature list; right: centered Clerk form; small screens: form only; no gradients or hero cards).
+  - Aligned Auth UI with visual design specifications in `components/auth/auth-layout.tsx`: 50/50 split layout on large screens, distinct left surface tone (`bg-surface` with `border-surface-border`), solid brand turquoise logo mark, exact headline and copy, 3 feature rows with rounded icon badges (`Sparkles`, `Share2`, `FileText`), and centered Clerk form on the base dark canvas.
+  - Wired typography tokens (`--font-sans`, `--font-heading`, `--font-mono`) from `ui-context.md` into `:root`, `html`, `body`, and Clerk appearance configuration.
   - Created `/sign-in/[[...sign-in]]` and `/sign-up/[[...sign-up]]` catch-all pages using Clerk components.
   - Updated `/` route in `app/page.tsx` to redirect authenticated users to `/editor` and unauthenticated users to `/sign-in`.
   - Added Clerk built-in `UserButton` to `components/editor/editor-navbar.tsx` right section while maintaining intact user menu and profile flows.

@@ -20,15 +20,24 @@ export function ProjectSidebar({
   className,
 }: ProjectSidebarProps) {
   return (
-    <aside
-      aria-label="Projects Sidebar"
-      aria-hidden={!isOpen}
-      className={cn(
-        "fixed top-14 left-0 z-40 flex h-[calc(100vh-3.5rem)] w-80 max-w-[calc(100vw-2rem)] flex-col border-r border-surface-border bg-surface text-copy-primary shadow-2xl transition-transform duration-300 ease-in-out",
-        isOpen ? "translate-x-0" : "-translate-x-full pointer-events-none",
-        className
+    <>
+      {/* Backdrop scrim on mobile to close sidebar when tapping outside */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 top-14 z-30 bg-black/50 backdrop-blur-xs md:hidden"
+          onClick={onClose}
+          aria-hidden="true"
+        />
       )}
-    >
+      <aside
+        aria-label="Projects Sidebar"
+        aria-hidden={!isOpen}
+        className={cn(
+          "fixed top-14 left-0 z-40 flex h-[calc(100vh-3.5rem)] w-80 max-w-[calc(100vw-2rem)] flex-col border-r border-surface-border bg-surface text-copy-primary shadow-2xl transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "-translate-x-full pointer-events-none",
+          className
+        )}
+      >
       {/* Header with Projects title + close button */}
       <div className="flex h-12 shrink-0 items-center justify-between border-b border-surface-border px-4">
         <h2 className="font-heading text-sm font-semibold tracking-tight text-copy-primary">
@@ -119,5 +128,6 @@ export function ProjectSidebar({
         </Button>
       </div>
     </aside>
+    </>
   );
 }
