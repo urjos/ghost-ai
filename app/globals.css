@@ -135,16 +135,22 @@
   --sidebar-accent-foreground: #f0f0f4;
   --sidebar-border: #2a2a30;
   --sidebar-ring: #00c8d4;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    font-family: var(--font-sans);
+  }
   body {
     @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
+    font-family: var(--font-sans);
   }
 }

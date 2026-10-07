@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Feature 02 completed. Ready for Feature 03: Authentication (`context/feature-specs/03-auth.md`).
+- Feature 03 completed. Ready for Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`).
 
 ## Completed
 
@@ -24,6 +24,15 @@ Update this file whenever the current phase, active feature, or implementation s
   - Implemented `components/editor/project-sidebar.tsx` with floating slide-in positioning, `isOpen` prop, header with `Projects` title and close button, shadcn `Tabs` ("My Projects" and "Shared") with empty placeholder states, and full-width "New Project" button with `Plus` icon.
   - Implemented `components/editor/editor-dialog.tsx` standardizing the dialog pattern using `globals.css` tokens (`bg-elevated`, `border-surface-border`, `text-copy-primary`, `rounded-3xl`) supporting title, description, and footer actions.
   - Verified clean TypeScript compilation, zero ESLint errors, and successful Next.js production build.
+- Feature 03: Authentication (`context/feature-specs/03-auth.md`)
+  - Installed `@clerk/ui` dependency and wired Clerk `dark` theme from `@clerk/ui/themes` with full token overrides using app CSS custom variables (`--accent-primary`, `--bg-surface`, `--bg-elevated`, etc.) with zero hardcoded colors.
+  - Wrapped root layout `app/layout.tsx` with `ClerkProvider`.
+  - Implemented Next.js 16 `proxy.ts` at project root with `clerkMiddleware` protecting all routes by default except public routes configured via existing Clerk sign-in and sign-up env vars (`/sign-in(.*)` and `/sign-up(.*)`).
+  - Built responsive, minimal, professional two-panel auth layout in `components/auth/auth-layout.tsx` (left: compact logo, tagline, text-only feature list; right: centered Clerk form; small screens: form only; no gradients or hero cards).
+  - Created `/sign-in/[[...sign-in]]` and `/sign-up/[[...sign-up]]` catch-all pages using Clerk components.
+  - Updated `/` route in `app/page.tsx` to redirect authenticated users to `/editor` and unauthenticated users to `/sign-in`.
+  - Added Clerk built-in `UserButton` to `components/editor/editor-navbar.tsx` right section while maintaining intact user menu and profile flows.
+  - Verified clean TypeScript checks, zero ESLint errors, and successful Next.js 16 production build (`npm run build`).
 
 ## In Progress
 
@@ -31,7 +40,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-- Feature 03: Authentication (`context/feature-specs/03-auth.md`)
+- Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`)
 
 ## Open Questions
 

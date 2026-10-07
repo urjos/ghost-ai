@@ -1,7 +1,12 @@
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      ghost Al
-    </div>
-  );
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+
+export default async function HomePage() {
+  const { userId } = await auth();
+
+  if (userId) {
+    redirect("/editor");
+  }
+
+  redirect(process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL || "/sign-in");
 }
