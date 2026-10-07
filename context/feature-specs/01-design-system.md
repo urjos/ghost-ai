@@ -1,4 +1,4 @@
-Read `AGENTS.md` before starting.
+Read `AGENTS.md` and `context/ui-context.md` before starting.
 
 We're adding the design system and UI primitive components.
 

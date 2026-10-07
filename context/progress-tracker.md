@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Feature 01 completed. Ready for the next feature unit.
+- Feature 02 completed. Ready for Feature 03: Authentication (`context/feature-specs/03-auth.md`).
 
 ## Completed
 
@@ -19,6 +19,11 @@ Update this file whenever the current phase, active feature, or implementation s
   - Implemented reusable `cn()` helper in `lib/utils.ts`.
   - Configured dark-only workspace tokens in `app/globals.css` per `context/ui-context.md`.
   - Verified no type errors and zero light mode fallback.
+- Feature 02: Editor Chrome (`context/feature-specs/02-editor-chrome.md`)
+  - Implemented `components/editor/editor-navbar.tsx` with fixed-height layout, left/center/right sections, sidebar toggle button using `PanelLeftOpen` / `PanelLeftClose` icons, dark surface background, and subtle bottom border.
+  - Implemented `components/editor/project-sidebar.tsx` with floating slide-in positioning, `isOpen` prop, header with `Projects` title and close button, shadcn `Tabs` ("My Projects" and "Shared") with empty placeholder states, and full-width "New Project" button with `Plus` icon.
+  - Implemented `components/editor/editor-dialog.tsx` standardizing the dialog pattern using `globals.css` tokens (`bg-elevated`, `border-surface-border`, `text-copy-primary`, `rounded-3xl`) supporting title, description, and footer actions.
+  - Verified clean TypeScript compilation, zero ESLint errors, and successful Next.js production build.
 
 ## In Progress
 
@@ -26,7 +31,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-- Feature 02 (Next spec in sequence)
+- Feature 03: Authentication (`context/feature-specs/03-auth.md`)
 
 ## Open Questions
 
