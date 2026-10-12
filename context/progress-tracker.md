@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Implementing Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`).
+- Implementing Feature 06: Project APIs (`context/feature-specs/06-project-apis.md`).
 
 ## Completed
 
@@ -34,21 +34,25 @@ Update this file whenever the current phase, active feature, or implementation s
   - Updated `/` route in `app/page.tsx` to redirect authenticated users to `/editor` and unauthenticated users to `/sign-in`.
   - Added Clerk built-in `UserButton` to `components/editor/editor-navbar.tsx` right section while maintaining intact user menu and profile flows.
   - Verified clean TypeScript checks, zero ESLint errors, and successful Next.js 16 production build (`npm run build`).
+- Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`)
+  - Implemented Create Project dialog with project name input and live slug preview.
+  - Implemented Rename Project dialog with prefilled name, auto-focus, Enter submission, and current name in description.
+  - Implemented Delete Project dialog with destructive confirmation only.
+  - Implemented custom project dialogs hook and wired project sidebar actions.
+  - Verified clean TypeScript checks and production build.
+- Feature 05: Prisma Schema And Data Layer (`context/feature-specs/05-prisma.md`)
+  - Created `prisma/models/project.prisma` containing `Project` and `ProjectCollaborator` models with `ProjectStatus` enum (`DRAFT`, `ARCHIVED`), cascade delete relation, unique constraints, and indexes on owner ID, creation date, email, and project date.
+  - Implemented `lib/prisma.ts` cached singleton client on `globalThis` with connection branching based on `DATABASE_URL` (`prisma+postgres://` using Accelerate, otherwise direct `@prisma/adapter-pg` via `pg.Pool`).
+  - Created and applied first migration `20261012174442_init` to the database and generated Prisma Client.
+  - Verified clean TypeScript checks and production Next.js build.
 
 ## In Progress
 
-- Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`)
-  - Build minimal Editor Home center section (heading, description, New Project button).
-  - Implement Create Project dialog with project name input and live slug preview.
-  - Implement Rename Project dialog with prefilled name input, auto-focus, Enter submission, and current name in description.
-  - Implement Delete Project dialog with destructive confirmation only and destructive button styling.
-  - Create dedicated hook for dialog state, form state, and loading state.
-  - Wire sidebar project items with rename & delete actions for owned projects (hidden for shared projects), with mobile backdrop scrim.
-  - Wire all dialog triggers using mock project data without API calls or persistence.
+- Feature 06: Project APIs (`context/feature-specs/06-project-apis.md`)
 
 ## Next Up
 
-- Feature 05: Starter System Designs / Canvas Integration
+- Feature 07: Editor Canvas & Starter Templates
 
 ## Open Questions
 
