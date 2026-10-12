@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Feature 03 completed. Ready for Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`).
+- Implementing Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`).
 
 ## Completed
 
@@ -37,11 +37,18 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## In Progress
 
-- None.
+- Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`)
+  - Build minimal Editor Home center section (heading, description, New Project button).
+  - Implement Create Project dialog with project name input and live slug preview.
+  - Implement Rename Project dialog with prefilled name input, auto-focus, Enter submission, and current name in description.
+  - Implement Delete Project dialog with destructive confirmation only and destructive button styling.
+  - Create dedicated hook for dialog state, form state, and loading state.
+  - Wire sidebar project items with rename & delete actions for owned projects (hidden for shared projects), with mobile backdrop scrim.
+  - Wire all dialog triggers using mock project data without API calls or persistence.
 
 ## Next Up
 
-- Feature 04: Project Dialogs (`context/feature-specs/04-project-dialogs.md`)
+- Feature 05: Starter System Designs / Canvas Integration
 
 ## Open Questions
 
