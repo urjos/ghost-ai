@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 const signInUrl = process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL || "/sign-in";
 const signUpUrl = process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL || "/sign-up";
@@ -8,10 +9,22 @@ const isPublicRoute = createRouteMatcher([
   `${signUpUrl}(.*)`,
 ]);
 
+const isApiRoute = createRouteMatcher(["/api(.*)"]);
+
 const proxy = clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
-    await auth.protect();
+  if (isPublicRoute(request)) {
+    return;
   }
+
+  if (isApiRoute(request)) {
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return;
+  }
+
+  await auth.protect();
 });
 
 export default proxy;

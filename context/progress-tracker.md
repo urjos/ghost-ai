@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Implementing Feature 06: Project APIs (`context/feature-specs/06-project-apis.md`).
+- Feature 06 completed. Next: Feature 07: Editor Home Wiring & Liveblocks / Canvas (`context/feature-specs/07-wire-editor-home.md`).
 
 ## Completed
 
@@ -45,14 +45,21 @@ Update this file whenever the current phase, active feature, or implementation s
   - Implemented `lib/prisma.ts` cached singleton client on `globalThis` with connection branching based on `DATABASE_URL` (`prisma+postgres://` using Accelerate, otherwise direct `@prisma/adapter-pg` via `pg.Pool`).
   - Created and applied first migration `20261012174442_init` to the database and generated Prisma Client.
   - Verified clean TypeScript checks and production Next.js build.
+- Feature 06: Project APIs (`context/feature-specs/06-project-apis.md`)
+  - Created backend REST endpoints: `GET /api/projects`, `POST /api/projects`, `GET /api/projects/[projectId]`, `PATCH /api/projects/[projectId]`, and `DELETE /api/projects/[projectId]`.
+  - Implemented shared data helpers in `lib/projects.ts` (`getUserProjects`, `getProjectById`, `createProject`, `renameProject`, `deleteProject`).
+  - Enforced Clerk authentication with `401` status on unauthenticated requests in both `proxy.ts` middleware and API handlers.
+  - Enforced project owner authorization checks on mutations with `403` status for non-owners.
+  - Implemented default project naming fallback to `Untitled Project` and preserved Prisma CUID ID generation strategy.
+  - Verified clean TypeScript compilation, zero ESLint errors, and successful Next.js 16 production build (`npm run build`).
 
 ## In Progress
 
-- Feature 06: Project APIs (`context/feature-specs/06-project-apis.md`)
+- None (Feature 06 completed).
 
 ## Next Up
 
-- Feature 07: Editor Canvas & Starter Templates
+- Feature 07: Editor Home Wiring & Liveblocks / Canvas (`context/feature-specs/07-wire-editor-home.md`)
 
 ## Open Questions
 
