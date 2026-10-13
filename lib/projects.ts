@@ -36,6 +36,36 @@ export async function getUserProjects(userId: string): Promise<Project[]> {
   });
 }
 
+export async function getSharedProjects(
+  userEmail?: string | string[]
+): Promise<Project[]> {
+  if (!userEmail) return [];
+  const emails = Array.isArray(userEmail) ? userEmail : [userEmail];
+  const validEmails = emails
+    .map((e) => (typeof e === "string" ? e.trim() : ""))
+    .filter((e) => e.length > 0);
+
+  if (validEmails.length === 0) return [];
+
+  return prisma.project.findMany({
+    where: {
+      collaborators: {
+        some: {
+          email: {
+            in: validEmails,
+          },
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      collaborators: true,
+    },
+  });
+}
+
 export async function getProjectById(projectId: string): Promise<Project | null> {
   return prisma.project.findUnique({
     where: {

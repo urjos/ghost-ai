@@ -12,6 +12,8 @@ export interface ProjectSidebarProps {
   onClose?: () => void;
   onNewProject?: () => void;
   projects?: ProjectItem[];
+  ownedProjects?: ProjectItem[];
+  sharedProjects?: ProjectItem[];
   onRenameProject?: (project: ProjectItem) => void;
   onDeleteProject?: (project: ProjectItem) => void;
   onSelectProject?: (project: ProjectItem) => void;
@@ -24,21 +26,23 @@ export function ProjectSidebar({
   onClose,
   onNewProject,
   projects = [],
+  ownedProjects,
+  sharedProjects,
   onRenameProject,
   onDeleteProject,
   onSelectProject,
   selectedProjectId,
   className,
 }: ProjectSidebarProps) {
-  const myProjects = React.useMemo(
-    () => projects.filter((project) => project.isOwner),
-    [projects]
-  );
+  const myProjects = React.useMemo(() => {
+    if (ownedProjects) return ownedProjects;
+    return projects.filter((project) => project.isOwner);
+  }, [ownedProjects, projects]);
 
-  const sharedProjects = React.useMemo(
-    () => projects.filter((project) => !project.isOwner),
-    [projects]
-  );
+  const sharedProjectsList = React.useMemo(() => {
+    if (sharedProjects) return sharedProjects;
+    return projects.filter((project) => !project.isOwner);
+  }, [sharedProjects, projects]);
 
   return (
     <>
@@ -177,7 +181,7 @@ export function ProjectSidebar({
             value="shared"
             className="flex-1 min-h-0 overflow-y-auto px-2 py-2"
           >
-            {sharedProjects.length === 0 ? (
+            {sharedProjectsList.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center gap-3 px-4 py-8">
                 <div className="rounded-2xl border border-surface-border/60 bg-subtle/50 p-4">
                   <Users
@@ -196,7 +200,7 @@ export function ProjectSidebar({
               </div>
             ) : (
               <div className="space-y-1">
-                {sharedProjects.map((project) => (
+                {sharedProjectsList.map((project) => (
                   <div
                     key={project.id}
                     className={cn(

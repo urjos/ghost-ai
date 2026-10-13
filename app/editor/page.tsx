@@ -1,116 +1,44 @@
-"use client";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { getUserProjects, getSharedProjects } from "@/lib/projects";
+import { EditorHomeView } from "@/components/editor/editor-home-view";
+import type { ProjectItem } from "@/types/project";
 
-import * as React from "react";
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { EditorNavbar } from "@/components/editor/editor-navbar";
-import { ProjectSidebar } from "@/components/editor/project-sidebar";
-import { CreateProjectDialog } from "@/components/editor/create-project-dialog";
-import { RenameProjectDialog } from "@/components/editor/rename-project-dialog";
-import { DeleteProjectDialog } from "@/components/editor/delete-project-dialog";
-import { useProjectDialogs } from "@/hooks/use-project-dialogs";
-import { ProjectItem } from "@/types/project";
+export default async function EditorPage() {
+  const { userId } = await auth();
 
-export default function EditorPage() {
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-  const [activeProject, setActiveProject] = React.useState<ProjectItem | null>(null);
+  if (!userId) {
+    redirect("/sign-in");
+  }
 
-  const {
-    activeDialog,
-    selectedProject,
-    openCreateDialog,
-    openRenameDialog,
-    openDeleteDialog,
-    closeDialog,
+  const user = await currentUser();
+  const emails = user?.emailAddresses?.map((e) => e.emailAddress) ?? [];
 
-    createName,
-    setCreateName,
-    createSlug,
-    renameName,
-    setRenameName,
+  const [ownedDbProjects, sharedDbProjects] = await Promise.all([
+    getUserProjects(userId),
+    getSharedProjects(emails),
+  ]);
 
-    isLoading,
+  const ownedProjects: ProjectItem[] = ownedDbProjects.map((p) => ({
+    id: p.id,
+    name: p.name,
+    slug: p.id,
+    isOwner: true,
+    updatedAt: p.updatedAt.toISOString(),
+  }));
 
-    projects,
-    handleCreateProject,
-    handleRenameProject,
-    handleDeleteProject,
-  } = useProjectDialogs();
+  const sharedProjects: ProjectItem[] = sharedDbProjects.map((p) => ({
+    id: p.id,
+    name: p.name,
+    slug: p.id,
+    isOwner: false,
+    updatedAt: p.updatedAt.toISOString(),
+  }));
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-base text-copy-primary">
-      <EditorNavbar
-        title="Ghost AI"
-        isSidebarOpen={isSidebarOpen}
-        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
-      />
-
-      <ProjectSidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        projects={projects}
-        selectedProjectId={activeProject?.id}
-        onSelectProject={(project) => setActiveProject(project)}
-        onNewProject={openCreateDialog}
-        onRenameProject={openRenameDialog}
-        onDeleteProject={openDeleteDialog}
-      />
-
-      <main className="flex flex-1 items-center justify-center px-4 py-12">
-        <div className="flex max-w-lg flex-col items-center text-center">
-          <h1 className="font-heading text-xl font-semibold tracking-tight text-copy-primary sm:text-2xl">
-            Create a project or open an existing one
-          </h1>
-          <p className="mt-2 text-sm text-copy-muted">
-            Start a new architecture workspace, or choose a project from the sidebar.
-          </p>
-          <Button
-            onClick={openCreateDialog}
-            className="mt-6 gap-2"
-          >
-            <Plus className="size-4" />
-            <span>New Project</span>
-          </Button>
-        </div>
-      </main>
-
-      {/* Project Dialogs */}
-      <CreateProjectDialog
-        open={activeDialog === "create"}
-        onOpenChange={(open) => {
-          if (!open) closeDialog();
-        }}
-        projectName={createName}
-        onProjectNameChange={setCreateName}
-        projectSlug={createSlug}
-        onSubmit={handleCreateProject}
-        onCancel={closeDialog}
-        isLoading={isLoading}
-      />
-
-      <RenameProjectDialog
-        open={activeDialog === "rename"}
-        onOpenChange={(open) => {
-          if (!open) closeDialog();
-        }}
-        currentProjectName={selectedProject?.name || ""}
-        renameValue={renameName}
-        onRenameValueChange={setRenameName}
-        onSubmit={handleRenameProject}
-        onCancel={closeDialog}
-        isLoading={isLoading}
-      />
-
-      <DeleteProjectDialog
-        open={activeDialog === "delete"}
-        onOpenChange={(open) => {
-          if (!open) closeDialog();
-        }}
-        projectName={selectedProject?.name || ""}
-        onConfirm={handleDeleteProject}
-        onCancel={closeDialog}
-        isLoading={isLoading}
-      />
-    </div>
+    <EditorHomeView
+      ownedProjects={ownedProjects}
+      sharedProjects={sharedProjects}
+    />
   );
 }

@@ -4,3 +4,4 @@ export * from "./editor-dialog";
 export * from "./create-project-dialog";
 export * from "./rename-project-dialog";
 export * from "./delete-project-dialog";
+export * from "./editor-home-view";

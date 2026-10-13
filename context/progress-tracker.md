@@ -8,7 +8,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- Feature 06 completed. Next: Feature 07: Editor Home Wiring & Liveblocks / Canvas (`context/feature-specs/07-wire-editor-home.md`).
+- Feature 07 completed. Next: Feature 08: Editor Workspace Shell (`context/feature-specs/08-editor-workspace-shell.md`).
 
 ## Completed
 
@@ -52,14 +52,23 @@ Update this file whenever the current phase, active feature, or implementation s
   - Enforced project owner authorization checks on mutations with `403` status for non-owners.
   - Implemented default project naming fallback to `Untitled Project` and preserved Prisma CUID ID generation strategy.
   - Verified clean TypeScript compilation, zero ESLint errors, and successful Next.js 16 production build (`npm run build`).
+- Feature 07: Editor Home Wiring (`context/feature-specs/07-wire-editor-home.md`)
+  - Converted `app/editor/page.tsx` to a server component. Fetches owned and shared projects server-side via `getUserProjects` and `getSharedProjects` helpers, passing both lists to the client view.
+  - Added `getSharedProjects(emails)` helper to `lib/projects.ts` querying collaborator membership.
+  - Created `hooks/use-project-actions.ts` managing create/rename/delete dialog state, short unique suffix + slugify for room ID generation, `POST /api/projects` create with navigation to new workspace, `PATCH /api/projects/[id]` rename with refresh, and `DELETE /api/projects/[id]` delete with redirect to `/editor` if deleting active workspace.
+  - Created `components/editor/editor-home-view.tsx` client component wiring `useProjectActions` to `ProjectSidebar` and all three dialogs.
+  - Updated `CreateProjectDialog` to accept `roomId` prop and show "Room ID preview" instead of slug preview.
+  - Updated `ProjectSidebar` to accept explicit `ownedProjects` and `sharedProjects` props alongside the legacy `projects` fallback.
+  - Fixed pg SSL deprecation warning by switching `sslmode=require` → `sslmode=verify-full` in `.env.local`.
+  - Verified zero TypeScript errors, zero ESLint errors, and successful Next.js 16 production build (`npm run build`).
 
 ## In Progress
 
-- None (Feature 06 completed).
+- None (Feature 07 completed).
 
 ## Next Up
 
-- Feature 07: Editor Home Wiring & Liveblocks / Canvas (`context/feature-specs/07-wire-editor-home.md`)
+- Feature 08: Liveblocks / Canvas integration.
 
 ## Open Questions
 
