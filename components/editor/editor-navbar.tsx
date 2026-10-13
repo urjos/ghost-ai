@@ -61,7 +61,25 @@ export function EditorNavbar({
       {/* Right section: user profile and controls */}
       <div className="flex items-center justify-end gap-2">
         {rightContent}
-        <UserButton />
+        <UserButton
+          appearance={{
+            elements: {
+              userButtonPopoverCard: {
+                backgroundColor: "#18181c",
+                border: "1px solid #2a2a30",
+              },
+              userButtonPopoverActionButton: {
+                color: "#c0c0cc",
+              },
+              userButtonPopoverActionButtonText: {
+                color: "#c0c0cc",
+              },
+              userButtonPopoverActionButtonIcon: {
+                color: "#808090",
+              },
+            },
+          }}
+        />
       </div>
     </header>
   );
